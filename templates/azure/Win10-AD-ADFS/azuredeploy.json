@@ -216,7 +216,7 @@
         },
         "_artifactsLocation": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/OTRF/Blacksmith/master/",
+            "defaultValue": "https://raw.githubusercontent.com/duzvik/Blacksmith/master/",
             "metadata": {
                 "description": "The location of resources, such as templates and DSC modules, that the template depends on"
             }
@@ -934,6 +934,40 @@
                     "fileUris": {
                         "value": [
                             "[uri(parameters('_artifactsLocation'), 'resources/scripts/powershell/active-directory/DSC/AD-ADFS/Set-ADFSFarm.ps1')]"
+                        ]
+                    },
+                    "vmName": {
+                        "value": "[variables('adfsServer')[0].vmName]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "ConnectADFS2AWS",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('adfsServer')[0].vmName, 'InstallADFS')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('customProtectedScriptExTemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "extensionName": {
+                        "value": "[variables('adfsServer')[0].extensionName]"
+                    },
+                    "commandToExecute": {
+                        "value": "[concat('powershell -ExecutionPolicy Unrestricted -File ./Aws.ps1')]"
+                    },
+                    "AWS-SAML.ps1": {
+                        "value": [
+                            "[uri(parameters('_artifactsLocation'), 'resources/scripts/powershell/active-directory/DSC/AD-ADFS/Aws.ps1')]"
                         ]
                     },
                     "vmName": {
