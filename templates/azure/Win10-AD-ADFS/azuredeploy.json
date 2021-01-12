@@ -1100,7 +1100,7 @@
                     "commandToExecute": {
                         "value": "[concat('powershell -ExecutionPolicy Unrestricted -File ./Aws.ps1')]"
                     },
-                    "AWS-SAML.ps1": {
+                    "fileUris": {
                         "value": [
                             "[uri(parameters('_artifactsLocation'), 'resources/scripts/powershell/active-directory/DSC/AD-ADFS/Aws.ps1')]"
                         ]
