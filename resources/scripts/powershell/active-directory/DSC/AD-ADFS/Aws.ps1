@@ -21,9 +21,4 @@ Set-ADFSRelyingPartyTrust -TargetName $Name -IssuanceTransformRulesFile "Issuanc
 Set-ADFSRelyingPartyTrust -TargetName $Name -SignatureAlgorithm $SignatureAlgorithm
 Set-AdfsRelyingPartyTrust -TargetName  $Name -AccessControlPolicyName "Permit everyone"
 Remove-Item "Issuance-Transform-Rules-ALL.txt"
-curl -o fedmeta.xml https://adfs.azsentinel.local/FederationMetadata/2007-06/FederationMetadata.xml
-
-New-ADGroup -Name "AWS-Billing" -GroupScope Global -DisplayName "AWS-Billing"
-$AccountPassword = "cJa,/#w8~?"
-New-ADUser -Name Tom  -DisplayName Tom  -UserPrincipalName 'tom@azsentinel.local' -OtherAttributes @{'mail'="tom@azsentinel.local"} -AccountPassword  (ConvertTo-SecureString -AsPlainText $AccountPassword -Force)  -CannotChangePassword $True  -PasswordNeverExpires $true ` -Enabled $True
-Add-ADGroupMember "AWS-Billing" -Members 'tom'
+curl -o C:\fedmeta.xml https://adfs.azsentinel.local/FederationMetadata/2007-06/FederationMetadata.xml
