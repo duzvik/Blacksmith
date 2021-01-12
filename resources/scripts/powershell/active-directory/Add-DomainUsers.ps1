@@ -113,3 +113,7 @@ $domainUsers | ConvertFrom-Csv | ForEach-Object {
         write-host "Account already exists.."
     }
 }
+
+New-ADGroup -Name "AWS-Billing" -GroupScope Global -DisplayName "AWS-Billing"
+Add-ADGroupMember "AWS-Billing" -Members 'lrodriguez'
+Set-ADUser -Identity 'lrodriguez' -EmailAddress 'lrodriguez@azsentinel.local'
