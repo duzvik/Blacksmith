@@ -946,40 +946,6 @@
             }
         },
         {
-            "name": "ConnectADFS2AWS",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('adfsServer')[0].vmName, 'InstallADFS')]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('customProtectedScriptExTemplateUri')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "extensionName": {
-                        "value": "[variables('adfsServer')[0].extensionName]"
-                    },
-                    "commandToExecute": {
-                        "value": "[concat('powershell -ExecutionPolicy Unrestricted -File ./Aws.ps1')]"
-                    },
-                    "AWS-SAML.ps1": {
-                        "value": [
-                            "[uri(parameters('_artifactsLocation'), 'resources/scripts/powershell/active-directory/DSC/AD-ADFS/Aws.ps1')]"
-                        ]
-                    },
-                    "vmName": {
-                        "value": "[variables('adfsServer')[0].vmName]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
-                    }
-                }
-            }
-        },
-        {
             "name": "UpdateVNetDNS",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
@@ -1113,7 +1079,41 @@
                     "workspaceKey": "[parameters('workspaceKey')]"
                 }
             }
-        }
+        },
+         {
+            "name": "ConnectADFS2AWS",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "dependsOn": [
+                "ADSetup"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('customProtectedScriptExTemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "extensionName": {
+                        "value": "[variables('adfsServer')[0].extensionName]"
+                    },
+                    "commandToExecute": {
+                        "value": "[concat('powershell -ExecutionPolicy Unrestricted -File ./Aws.ps1')]"
+                    },
+                    "AWS-SAML.ps1": {
+                        "value": [
+                            "[uri(parameters('_artifactsLocation'), 'resources/scripts/powershell/active-directory/DSC/AD-ADFS/Aws.ps1')]"
+                        ]
+                    },
+                    "vmName": {
+                        "value": "[variables('adfsServer')[0].vmName]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
     ],
     "outputs": {
         "virtualNetworkName": {
