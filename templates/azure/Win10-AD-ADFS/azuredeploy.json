@@ -614,7 +614,7 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": [
-                        "https://raw.githubusercontent.com/OTRF/Blacksmith/master/templates/azure/Win10-AD-ADFS/scripts/Set-Initial-Settings.ps1",
+                        "https://raw.githubusercontent.com/duzvik/Blacksmith/master/templates/azure/Win10-AD-ADFS/scripts/Set-Initial-Settings.ps1",
                         "[variables('prepareBoxScript')]",
                         "[variables('setSecurityAuditingScript')]",
                         "[variables('setPowerShellLogging')]",
@@ -643,7 +643,7 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": [
-                        "https://raw.githubusercontent.com/OTRF/Blacksmith/master/templates/azure/Win10-AD-ADFS/scripts/Set-Initial-Settings.ps1",
+                        "https://raw.githubusercontent.com/duzvik/Blacksmith/master/templates/azure/Win10-AD-ADFS/scripts/Set-Initial-Settings.ps1",
                         "[variables('adDSCModules')]",
                         "[variables('prepareBoxScript')]",
                         "[variables('setSecurityAuditingScript')]",
@@ -672,7 +672,7 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": [
-                        "https://raw.githubusercontent.com/OTRF/Blacksmith/master/templates/azure/Win10-AD-ADFS/scripts/Set-Initial-Settings.ps1",
+                        "https://raw.githubusercontent.com/duzvik/Blacksmith/master/templates/azure/Win10-AD-ADFS/scripts/Set-Initial-Settings.ps1",
                         "[variables('adfsDSCModules')]",
                         "[variables('prepareBoxScript')]",
                         "[variables('setSecurityAuditingScript')]",
@@ -1007,7 +1007,7 @@
                     },
                     "fileUris": {
                         "value": [
-                            "https://raw.githubusercontent.com/OTRF/Blacksmith/master/templates/azure/Win10-AD-ADFS/scripts/Set-AD.ps1",
+                            "https://raw.githubusercontent.com/duzvik/Blacksmith/master/templates/azure/Win10-AD-ADFS/scripts/Set-AD.ps1",
                             "[uri(parameters('_artifactsLocation'), 'resources/scripts/powershell/active-directory/Set-OUs.ps1')]",
                             "[uri(parameters('_artifactsLocation'), 'resources/scripts/powershell/active-directory/Add-DomainUsers.ps1')]",
                             "[uri(parameters('_artifactsLocation'), 'resources/scripts/powershell/auditing/Set-AuditSAMRemoteCalls.ps1')]"
