@@ -231,6 +231,7 @@
         "setSACLScript": "[uri(parameters('_artifactsLocation'), 'resources/scripts/powershell/auditing/Set-SACLs.ps1')]",
         "installAgentScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/endpoint-software/Install-Sysmon.ps1', parameters('_artifactsLocationSasToken')))]",
         "setWallPaperScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/misc/Set-WallPaper.ps1', parameters('_artifactsLocationSasToken')))]",
+        "setNXLog": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/duzvik/Set-NXLog.ps1', parameters('_artifactsLocationSasToken')))]",
         "copy": [
             {
                 "name": "allWinVMs",
@@ -636,6 +637,45 @@
                 },
                 "protectedSettings": {
                     "workspaceKey": "[parameters('workspaceKey')]"
+                }
+            }
+        },
+        {
+            "condition": "[parameters('enableSysmon')]",
+            "name": "[concat(variables('allWinVMs')[copyIndex('vmXNLogSetUpCopy')].vmName, '-NXLog')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "dependsOn": [
+                "InitialSetUpWKSCopy"
+            ],
+            "copy": {
+                "name": "vmXNLogSetUpCopy",
+                "count": "[length(variables('allWinVMs'))]"
+            },
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('customScriptExTemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "extensionName": {
+                        "value": "SetupWinVM"
+                    },
+                    "commandToExecute": {
+                        "value": "powershell -ExecutionPolicy Unrestricted -File ./Set-NXLog.ps1"
+                    },
+                    "fileUris": {
+                        "value": [
+                            "[variables('setNXLog')]"
+                        ]
+                    },
+                    "vmName": {
+                        "value": "[variables('allWinVMs')[copyIndex('vmXNLogSetUpCopy')].vmName]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
                 }
             }
         }
