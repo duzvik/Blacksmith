@@ -1,4 +1,6 @@
- write-host "[+] Processing NXLoog Installation.."
+mkdir C:\snarelogs\
+
+write-host "[+] Processing NXLoog Installation.."
 
 $URL = "https://nxlog.co/system/files/products/files/348/nxlog-ce-2.10.2150.msi"
 Resolve-DnsName nxlog.co
