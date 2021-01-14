@@ -170,7 +170,7 @@
             "metadata": {
                 "description": "The location of resources, such as templates and DSC modules, that the template depends on"
             },
-            "defaultValue": "https://raw.githubusercontent.com/OTRF/Blacksmith/master/"
+            "defaultValue": "https://raw.githubusercontent.com/duzvik/Blacksmith/master/"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
