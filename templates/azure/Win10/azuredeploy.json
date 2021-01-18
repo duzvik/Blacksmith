@@ -527,7 +527,7 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": [
-                        "https://raw.githubusercontent.com/OTRF/Blacksmith/master/templates/azure/Win10/scripts/Set-Initial-Settings.ps1",
+                        "https://raw.githubusercontent.com/duzvik/Blacksmith/master/templates/azure/Win10/scripts/Set-Initial-Settings.ps1",
                         "[variables('prepareBoxScript')]",
                         "[variables('setSecurityAuditingScript')]",
                         "[variables('saclModule')]",
@@ -641,7 +641,6 @@
             }
         },
         {
-            "condition": "[parameters('enableSysmon')]",
             "name": "[concat(variables('allWinVMs')[copyIndex('vmXNLogSetUpCopy')].vmName, '-NXLog')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
