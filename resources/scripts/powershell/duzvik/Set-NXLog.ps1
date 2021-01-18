@@ -54,27 +54,42 @@ SpoolDir  %ROOT%\data
 </Processor>
 
 ########################INPUTS##########################
-<Input eventlog>
+<Input eventlog_security>
 	Module im_msvistalog
-# ReadFromLast True
-#<Select Path="Microsoft-Windows-Sysmon/Operational">*</Select>
-<QueryXML>
-   <QueryList>                     
-     <Query Id="0">  
-        <Select Path="Security">*</Select>
-     </Query>
-    <Query Id="1">
-		<Select Path="Microsoft-Windows-PowerShell/Operational">*</Select>
-    </Query>
-	<Query Id="2">
-		<Select Path="Microsoft-Windows-Sysmon/Operational">*</Select>
-    </Query>
-   </QueryList>
-</QueryXML>
+    # ReadFromLast True
+    #<Select Path="Microsoft-Windows-Sysmon/Operational">*</Select>
+    <QueryXML>
+        <QueryList>                     
+            <Query Id="0">  
+                <Select Path="Security">*</Select>
+            </Query>
+        </QueryList>
+    </QueryXML>
 </Input>
+<Input eventlog_powershell>
+	Module im_msvistalog
+    <QueryXML>
+        <QueryList>                     
+            <Query Id="0">
+                <Select Path="Microsoft-Windows-PowerShell/Operational">*</Select>
+            </Query>
+        </QueryList>
+    </QueryXML>
+</Input>
+<Input eventlog_sysmon>
+	Module im_msvistalog
+    <QueryXML>
+        <QueryList>                     
+            <Query Id="0">
+                <Select Path="Microsoft-Windows-Sysmon/Operational">*</Select>
+            </Query>
+        </QueryList>
+    </QueryXML>
+</Input>
+
 <Processor eventlog_transformer>
 	Module pm_transformer
-# OutputFormat syslog_rfc5424
+    # OutputFormat syslog_rfc5424
 </Processor>
 <Processor buffer>
     Module  pm_buffer
@@ -83,16 +98,33 @@ SpoolDir  %ROOT%\data
     Type    disk
 </Processor>
 ########################OUTPUTS##########################
-<Output out>
+<Output out_security>
     Module  om_file
-    File    "C:\snarelogs\out.log"
+    File    "C:\snarelogs\security.log"
     Exec to_syslog_snare();
 </Output>
+<Output out_powershell>
+    Module  om_file
+    File    "C:\snarelogs\powershell.log"
+    Exec to_syslog_snare();
+</Output>
+<Output out_sysmon>
+    Module  om_file
+    File    "C:\snarelogs\sysmon.log"
+    Exec to_syslog_snare();
+</Output>
+
 <Route 1>
-	Path eventlog => eventlog_transformer => out
+	Path eventlog_security => eventlog_transformer => out_security
+</Route>
+<Route 2>
+	Path eventlog_powershell => eventlog_transformer => out_powershell
+</Route>
+<Route 3>
+	Path eventlog_sysmon => eventlog_transformer => out_sysmon
 </Route>
 "@
-
+# https://community.graylog.org/t/multiple-nxlog-inputs-and-outputs/5158
 $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
 [System.IO.File]::WriteAllLines("C:\Program Files (x86)\nxlog\conf\nxlog.conf", $conf, $Utf8NoBomEncoding)
 
