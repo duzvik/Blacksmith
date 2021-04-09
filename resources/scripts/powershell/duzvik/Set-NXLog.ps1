@@ -113,15 +113,21 @@ SpoolDir  %ROOT%\data
     File    "C:\snarelogs\sysmon.log"
     Exec to_syslog_snare();
 </Output>
+<Output syslogout> 
+ Module om_tcp 
+ Host 165.232.135.17
+ Port 514
+ Exec to_syslog_snare(); 
+</Output> 
 
 <Route 1>
-	Path eventlog_security => eventlog_transformer => out_security
+	Path eventlog_security => eventlog_transformer => syslogout
 </Route>
 <Route 2>
-	Path eventlog_powershell => eventlog_transformer => out_powershell
+	Path eventlog_powershell => eventlog_transformer => syslogout
 </Route>
 <Route 3>
-	Path eventlog_sysmon => eventlog_transformer => out_sysmon
+	Path eventlog_sysmon => eventlog_transformer => syslogout
 </Route>
 "@
 # https://community.graylog.org/t/multiple-nxlog-inputs-and-outputs/5158
