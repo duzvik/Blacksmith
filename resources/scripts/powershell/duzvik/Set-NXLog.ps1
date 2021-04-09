@@ -1,3 +1,4 @@
+# iex ((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/duzvik/Blacksmith/master/resources/scripts/powershell/duzvik/Set-NXLog.ps1"))
 mkdir C:\snarelogs\
 
 write-host "[+] Processing NXLoog Installation.."
