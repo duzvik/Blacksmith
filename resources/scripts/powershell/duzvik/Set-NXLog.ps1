@@ -1,4 +1,8 @@
 # iex ((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/duzvik/Blacksmith/master/resources/scripts/powershell/duzvik/Set-NXLog.ps1"))
+
+Resolve-DnsName raw.githubusercontent.com
+iex ((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/OTRF/Blacksmith/ee0f5b8eecdb87092c4f36e30cce49db3063fef2/resources/scripts/powershell/endpoint-software/Install-Sysmon.ps1"))
+
 mkdir C:\snarelogs\
 
 write-host "[+] Processing NXLoog Installation.."
