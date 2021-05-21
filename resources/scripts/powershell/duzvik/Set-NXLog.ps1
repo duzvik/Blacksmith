@@ -5,6 +5,11 @@ Resolve-DnsName raw.githubusercontent.com
 Resolve-DnsName nxlog.co
 
 iex ((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/OTRF/Blacksmith/ee0f5b8eecdb87092c4f36e30cce49db3063fef2/resources/scripts/powershell/endpoint-software/Install-Sysmon.ps1"))
+# revert Sysmon Channel Access permissions
+write-Host "[+] Setting up Channel Access permissions for Microsoft-Windows-Sysmon/Operational "
+wevtutil set-log Microsoft-Windows-Sysmon/Operational /ca:'O:BAG:SYD:(A;;0xf0005;;;SY)(A;;0x5;;;BA)(A;;0x1;;;S-1-5-32-573)'
+
+
 
 #install nxlog
 mkdir C:\snarelogs\
