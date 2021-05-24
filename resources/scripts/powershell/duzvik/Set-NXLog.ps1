@@ -1,10 +1,29 @@
 # iex ((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/duzvik/Blacksmith/master/resources/scripts/powershell/duzvik/Set-NXLog.ps1"))
 
+[CmdletBinding()]
+param (
+    [Parameter(Mandatory=$false)]
+    [string]$DestinationIP,
+    
+    [Parameter(Mandatory=$false)]
+    [string]$DestinationPort,
+
+    [Parameter(Mandatory=$false)]
+    [bool]$Sysmon = $true,
+
+    [Parameter(Mandatory=$false)]
+    [string]$ExecMarker = "marker",
+)
+
+
 #install sysmon
 Resolve-DnsName raw.githubusercontent.com
 Resolve-DnsName nxlog.co
 
-#iex ((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/OTRF/Blacksmith/ee0f5b8eecdb87092c4f36e30cce49db3063fef2/resources/scripts/powershell/endpoint-software/Install-Sysmon.ps1"))
+if($Sysmon) {
+ iex ((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/OTRF/Blacksmith/ee0f5b8eecdb87092c4f36e30cce49db3063fef2/resources/scripts/powershell/endpoint-software/Install-Sysmon.ps1"))
+}
+
 ## revert Sysmon Channel Access permissions
 #write-Host "[+] Setting up Channel Access permissions for Microsoft-Windows-Sysmon/Operational "
 #wevtutil set-log Microsoft-Windows-Sysmon/Operational /ca:'O:BAG:SYD:(A;;0xf0005;;;SY)(A;;0x5;;;BA)(A;;0x1;;;S-1-5-32-573)'
@@ -50,8 +69,12 @@ write-Host "Downloading shipper config.."
 $wc.DownloadFile($ConfigUrl, $shipperConfig)
 if (!(Test-Path $shipperConfig)){ Write-Error "File $shipperConfig does not exist" -ErrorAction Stop }
 
-# Updating Config IP
-#((Get-Content -path $shipperConfig -Raw) -replace 'IPADDRESS',$DestinationIP) | Set-Content -Path $shipperConfig
+# Updating RIN IP
+((Get-Content -path $shipperConfig -Raw) -replace 'IPADDRESS',$DestinationIP) | Set-Content -Path $shipperConfig
+# Updating RIN IP
+((Get-Content -path $shipperConfig -Raw) -replace 'PORT',$DestinationPort) | Set-Content -Path $shipperConfig
+# Updating RIN Marker
+((Get-Content -path $shipperConfig -Raw) -replace 'MARKER',$ExecMarker) | Set-Content -Path $shipperConfig
 
 
 write-Host "[+] Restarting Log Services .."
