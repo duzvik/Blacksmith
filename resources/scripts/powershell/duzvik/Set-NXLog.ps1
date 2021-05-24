@@ -80,9 +80,6 @@ function Install-NXLog
     # Updating RIN Marker
     ((Get-Content -path $shipperConfig -Raw) -replace 'REPLACE_MARKER',$ExecMarker) | Set-Content -Path $shipperConfig
 
-    #tmp
-    ((Get-Content -path $shipperConfig -Raw) -replace 'REPLACE_PORT2',"520") | Set-Content -Path $shipperConfig
-
     write-Host "[+] Restarting Log Services .."
     $LogServices = @("nxlog")
 
