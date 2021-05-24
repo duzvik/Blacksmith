@@ -74,11 +74,11 @@ function Install-NXLog
     if (!(Test-Path $shipperConfig)){ Write-Error "File $shipperConfig does not exist" -ErrorAction Stop }
 
     # Updating RIN IP
-    ((Get-Content -path $shipperConfig -Raw) -replace 'IPADDRESS',$DestinationIP) | Set-Content -Path $shipperConfig
+    ((Get-Content -path $shipperConfig -Raw) -replace 'REPLACE_IPADDRESS',$DestinationIP) | Set-Content -Path $shipperConfig
     # Updating RIN IP
-    ((Get-Content -path $shipperConfig -Raw) -replace 'PORT',$DestinationPort) | Set-Content -Path $shipperConfig
+    ((Get-Content -path $shipperConfig -Raw) -replace 'REPLACE_PORT',$DestinationPort) | Set-Content -Path $shipperConfig
     # Updating RIN Marker
-    ((Get-Content -path $shipperConfig -Raw) -replace 'MARKER',$ExecMarker) | Set-Content -Path $shipperConfig
+    ((Get-Content -path $shipperConfig -Raw) -replace 'REPLACE_MARKER',$ExecMarker) | Set-Content -Path $shipperConfig
 
 
     write-Host "[+] Restarting Log Services .."
