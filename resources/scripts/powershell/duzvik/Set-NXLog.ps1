@@ -16,7 +16,7 @@ function Install-NXLog
         [bool]$Sysmon = $true,
 
         [Parameter(Mandatory=$false)]
-        [string]$ExecMarker = "marker",
+        [string]$ExecMarker = "marker"
     )
 
 
