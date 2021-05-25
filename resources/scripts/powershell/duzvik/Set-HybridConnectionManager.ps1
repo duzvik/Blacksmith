@@ -1,4 +1,4 @@
-# iex (New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/duzvik/Blacksmith/master/resources/scripts/powershell/duzvik/Set-NXLog.ps1"); Install-NXLog -DestinationIP 1.1.1.1 -DestinationPort 600 -Sysmon $true -ExecMarker 2021marker 
+# iex (New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/duzvik/Blacksmith/master/resources/scripts/powershell/duzvik/Set-HybridConnectionManager.ps1"); Install-HybridConnectionManager -ConnectionString 123
 
 
 function Install-Set-HybridConnectionManager
@@ -7,7 +7,7 @@ function Install-Set-HybridConnectionManager
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true)]
-        [string]$ConnectionString,
+        [string]$ConnectionString
     )
 
 
