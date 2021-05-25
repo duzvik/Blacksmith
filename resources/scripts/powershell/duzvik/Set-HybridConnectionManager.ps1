@@ -1,7 +1,7 @@
 # iex (New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/duzvik/Blacksmith/master/resources/scripts/powershell/duzvik/Set-HybridConnectionManager.ps1"); Install-HybridConnectionManager -ConnectionString 123
 
 
-function Install-Set-HybridConnectionManager
+function Install-HybridConnectionManager
 {
 
     [CmdletBinding()]
@@ -29,7 +29,8 @@ function Install-Set-HybridConnectionManager
     if (!(Test-Path $File)) { Write-Error "File $File does not exist" -ErrorAction Stop }
 
     # Installing HybridConnectionManager
-    write-Host "[+] Installing NXLog.."
+    write-Host "[+] Installing HybridConnectionManager
+  .."
     &  msiexec /i $File /quiet
     Start-Sleep -s 15
 
