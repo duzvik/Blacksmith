@@ -25,7 +25,7 @@ function Install-NXLog
     Resolve-DnsName nxlog.co
 
     if($Sysmon) {
-     iex ((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/OTRF/Blacksmith/ee0f5b8eecdb87092c4f36e30cce49db3063fef2/resources/scripts/powershell/endpoint-software/Install-Sysmon.ps1"))
+     iex ((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/OTRF/Blacksmith/ee0f5b8eecdb87092c4f36e30cce49db3063fef2/resources/scripts/powershell/endpoint-software/Install-Sysmon.ps1")) -SysmonConfigUrl "https://raw.githubusercontent.com/duzvik/Blacksmith/master/resources/configs/duzvik/sysmon.xml"
     }
 
     ## revert Sysmon Channel Access permissions
