@@ -1,5 +1,5 @@
 # iex (New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/duzvik/Blacksmith/master/resources/scripts/powershell/duzvik/Set-NXLog.ps1"); Install-NXLog -DestinationIP 1.1.1.1 -DestinationPort 600 -Sysmon $true -ExecMarker 2021marker 
-
+#iwr("https://raw.githubusercontent.com/duzvik/Blacksmith/master/resources/scripts/powershell/duzvik/Set-NXLog.ps1") -UseBasicParsing -Headers @{"Cache-Control"="no-cache"} | iex; Install-NXLog -DestinationIP 165.232.135.17 -DestinationPort 600 -Sysmon $true -ExecMarker default_marker
 
 function Install-NXLog
 {
