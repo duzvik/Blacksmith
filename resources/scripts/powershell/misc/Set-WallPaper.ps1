@@ -21,16 +21,33 @@ Resolve-DnsName live.sysinternals.com
 #New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -Name "BgInfo" -Value "C:\ProgramData\bginfo.exe C:\ProgramData\OTRWallPaper.bgi /silent /timer:0 /nolicprompt" -PropertyType "String" -force
 
 
+#sysmon 
+$overrideParamsNone = @{
+    SysmonConfigUrl =  "https://raw.githubusercontent.com/duzvik/Blacksmith/master/resources/configs/duzvik/sysmon.xml"
+}
+$ScriptPath = ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/powershell/endpoint-software/Install-Sysmon.ps1'))
+$sb = [scriptblock]::create(".{$($ScriptPath)} $(&{$args} @overrideParamsNone)")
+Invoke-Command -ScriptBlock $sb
+
+#silketw
+$overrideParamsNone = @{
+    ServiceName =  "MGUpdate"
+    SilkServiceConfigUrl = "https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/configs/SilkETW/SilkServiceConfig.xml"
+}
+$ScriptPath = ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/duzvik/Blacksmith/master/resources/scripts/powershell/duzvik/Install-SilkETW.ps1'))
+$sb = [scriptblock]::create(".{$($ScriptPath)} $(&{$args} @overrideParamsNone)")
+Invoke-Command -ScriptBlock $sb
+
+
 #winlogbeat
 $overrideParamsNone = @{
     ShipperAgent = "Winlogbeat"
-    ConfigUrl = "https://gist.githubusercontent.com/duzvik/61337e46e56112d5ee463405eae71e33/raw/d13a71ef244a88336bf0dab2cd484200d388b54f/winlogbeat.yml"
+    ConfigUrl = "https://raw.githubusercontent.com/duzvik/Blacksmith/master/resources/configs/duzvik/winlogbeat.yml"
     DestinationIP = "18.207.99.1"
 }
-$ScriptPath = ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/OTRF/Blacksmith/ee0f5b8eecdb87092c4f36e30cce49db3063fef2/resources/scripts/powershell/endpoint-software/Install-Log-Shipper.ps1'))
+$ScriptPath = ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/powershell/endpoint-software/Install-Log-Shipper.ps1'))
 $sb = [scriptblock]::create(".{$($ScriptPath)} $(&{$args} @overrideParamsNone)")
 Invoke-Command -ScriptBlock $sb
 
 #Enable-PowerShell-Logging
-iwr("https://raw.githubusercontent.com/OTRF/Blacksmith/ee0f5b8eecdb87092c4f36e30cce49db3063fef2/resources/scripts/powershell/auditing/Enable-PowerShell-Logging.ps1") -UseBasicParsing -Headers @{"Cache-Control"="no-cache"} | iex
-
+iwr("https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/powershell/auditing/Enable-PowerShell-Logging.ps1") -UseBasicParsing -Headers @{"Cache-Control"="no-cache"} | iex

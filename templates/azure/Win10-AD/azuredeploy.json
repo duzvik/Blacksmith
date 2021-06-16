@@ -189,30 +189,30 @@
             },
             "defaultValue": "snet-win"
         },
-        "enableSysmon": {
-            "type": "bool",
-            "defaultValue": false,
-            "metadata": {
-                "description": "Do you want to install Sysmon on the endpoint?"
-            }
-        },
-        "enableMonitoringAgent": {
-            "type": "bool",
-            "defaultValue": false,
-            "metadata": {
-                "description": "Do you want to enable the Microsoft Log Analytics Monitoring agent? "
-            }
-        },
-        "enableAADConnect": {
-            "type": "bool",
-            "metadata": {
-                "description": "Do you want to want download the AADConnect installer and get it ready to set up after the deployment?"
-            },
-            "defaultValue": false
-        },
+        // "enableSysmon": {
+        //     "type": "bool",
+        //     "defaultValue": false,
+        //     "metadata": {
+        //         "description": "Do you want to install Sysmon on the endpoint?"
+        //     }
+        // },
+        // "enableMonitoringAgent": {
+        //     "type": "bool",
+        //     "defaultValue": false,
+        //     "metadata": {
+        //         "description": "Do you want to enable the Microsoft Log Analytics Monitoring agent? "
+        //     }
+        // },
+        // "enableAADConnect": {
+        //     "type": "bool",
+        //     "metadata": {
+        //         "description": "Do you want to want download the AADConnect installer and get it ready to set up after the deployment?"
+        //     },
+        //     "defaultValue": false
+        // },
         "_artifactsLocation": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/OTRF/Blacksmith/master/",
+            "defaultValue": "https://raw.githubusercontent.com/duzvik/Blacksmith/master/",
             "metadata": {
                 "description": "The location of resources, such as templates and DSC modules, that the template depends on"
             }
