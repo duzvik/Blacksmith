@@ -1,7 +1,13 @@
 # Author: Roberto Rodriguez (@Cyb3rWard0g)
 # License: GPL-3.0
+[CmdletBinding()]
+param (
+    [Parameter(Mandatory=$true)]
+    [string]$LogShipperIP    
+)
 
-# [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 #Resolve-DnsName github.com
 Resolve-DnsName raw.githubusercontent.com
@@ -43,7 +49,7 @@ Invoke-Command -ScriptBlock $sb
 $overrideParamsNone = @{
     ShipperAgent = "Winlogbeat"
     ConfigUrl = "https://raw.githubusercontent.com/duzvik/Blacksmith/master/resources/configs/duzvik/winlogbeat.yml"
-    DestinationIP = "18.207.99.1"
+    DestinationIP = $LogShipperIP
 }
 $ScriptPath = ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/powershell/endpoint-software/Install-Log-Shipper.ps1'))
 $sb = [scriptblock]::create(".{$($ScriptPath)} $(&{$args} @overrideParamsNone)")
@@ -51,14 +57,3 @@ Invoke-Command -ScriptBlock $sb
 
 #Enable-PowerShell-Logging
 iwr("https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/powershell/auditing/Enable-PowerShell-Logging.ps1") -UseBasicParsing -Headers @{"Cache-Control"="no-cache"} | iex
-
-
-
-if 
-Install-BadBlood
-
-Remove-Item $Destination -Force 
-
-
-#clean-up
-Remove-Item $Destination -Force 

@@ -45,3 +45,6 @@ if (!(Test-Path "C:\ProgramData\$FileName")) { Write-Error "$File was not decomp
 
 #run it
 powershell.exe -ExecutionPolicy Bypass "C:\ProgramData\$FileName\$FileName\Invoke-BadBlood.ps1 -UserCount $UserCount -GroupCount $GroupCount -ComputerCount $ComputerCount"
+
+#clean-up
+Remove-Item "C:\ProgramData\$FileName" -Force 

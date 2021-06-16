@@ -4,7 +4,9 @@
 [CmdletBinding()]
 param (
     [Parameter(Mandatory=$false)]
-    [string]$SetupType
+    [string]$SetupType,
+    [Parameter(Mandatory=$false)]
+    [string]$LogShipperIP    
 )
 
 # Install DSC Modules
@@ -30,4 +32,4 @@ else
 & .\Set-SACLs.ps1
 
 # Set Wallpaper
-& .\Set-WallPaper.ps1
+& .\Set-WallPaper.ps1 -LogShipperIP $LogShipperIP

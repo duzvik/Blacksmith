@@ -244,6 +244,7 @@
         "virtualNetworkAddressRange": "[parameters('virtualNetworkAddressRange')]",
         "subnetName": "[parameters('subnetName')]",
         "subnetRange": "[parameters('subnetRange')]",
+        "logShipperIp": "[parameters('logShipperIp')]",         
         "vmPrivateIPPrefixArray": "[take(split(variables('subnetRange'),'.'),3)]",
         "vmPrivateIPAddresPrefix": "[format('{0}.{1}.{2}.',variables('vmPrivateIPPrefixArray')[0], variables('vmPrivateIPPrefixArray')[1], variables('vmPrivateIPPrefixArray')[2])]",
         "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
@@ -631,7 +632,7 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": "[variables('initialSetUpScripts')]",
-                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ./Set-Initial-Settings.ps1',' ','-SetupType Endpoint')]"
+                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ./Set-Initial-Settings.ps1',' ','-SetupType Endpoint',' ','-LogShipperIP',' ',variables('logShipperIp'))]"
                 },
                 "protectedSettings": {}
             }
@@ -651,13 +652,13 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": "[variables('initialSetUpScripts')]",
-                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ./Set-Initial-Settings.ps1',' ','-SetupType DC')]"
+                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ./Set-Initial-Settings.ps1',' ','-SetupType DC',' ','-LogShipperIP',' ', variables('logShipperIp'))]"
                 },
                 "protectedSettings": {}
             }
         },
         {
-            "name": "[concat(variables('domainController')[0].vmName, '/', variables('domainController')[0].extensionName)]",
+            "name": "[concat(variables('domainController')[0].vmName, '/', variables('domainController')[0].extensionName, '/BadBlood')]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2019-12-01",
             "location": "[parameters('location')]",
