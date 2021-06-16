@@ -31,6 +31,7 @@ if (!(Test-Path $File)) { Write-Error "File $File does not exist" -ErrorAction S
 # Unzip file
 write-Host "[+] Decompressing $OutputFile .."
 $FileName = (Get-Item $File).Basename
+Write-Host "expand-archive -path $File -DestinationPath 'C:\ProgramData\$ServiceName'"
 expand-archive -path $File -DestinationPath "C:\ProgramData\$ServiceName"
 if (!(Test-Path "C:\ProgramData\$ServiceName")) { Write-Error "$File was not decompressed successfully" -ErrorAction Stop }
 
@@ -66,8 +67,8 @@ if (!(Test-Path $SilkServiceConfigPath)) { Write-Error "SilkServiceConfig does n
 
 # Installing Service
 write-host "[+] Creating the new SilkETW service.."
-New-Service -name SilkETW `
-    -displayName SilkETW `
+New-Service -name $ServiceName `
+    -displayName $ServiceName `
     -binaryPathName "C:\ProgramData\$ServiceName\v8\SilkService\SilkService.exe" `
     -StartupType Automatic `
     -Description "This is the SilkETW service to consume ETW events."
