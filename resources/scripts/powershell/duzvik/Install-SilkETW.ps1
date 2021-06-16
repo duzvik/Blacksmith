@@ -20,7 +20,7 @@ Resolve-DnsName github.com
 Resolve-DnsName raw.githubusercontent.com
 
 $OutputFile = Split-Path $Url -leaf
-$File = "C:\ProgramData\$ServiceName"
+$File = "C:\ProgramData\$OutputFile"
 
 # Download File
 write-Host "[+] Downloading $OutputFile .."
