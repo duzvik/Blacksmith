@@ -189,6 +189,10 @@
             },
             "defaultValue": "snet-win"
         },
+        "logShipperIp": {
+            "type": "string",
+            "defaultValue": "18.207.99.1"
+        },
         // "enableSysmon": {
         //     "type": "bool",
         //     "defaultValue": false,
@@ -288,6 +292,7 @@
         "saclModule": "https://raw.githubusercontent.com/OTRF/Set-AuditRule/master/Set-AuditRule.ps1",
         "setSACLScript": "[uri(parameters('_artifactsLocation'), 'resources/scripts/powershell/auditing/Set-SACLs.ps1')]",
         "setWallPaperScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/misc/Set-WallPaper.ps1', parameters('_artifactsLocationSasToken')))]",
+        "setBadBloood": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/duzvik/Install-BadBlood.ps1', parameters('_artifactsLocationSasToken')))]",
         
         // Powershell DSC Scripts
         "dscModules": "[uri(parameters('_artifactsLocation'), concat('templates/azure/Win10-AD/scripts/Install-DSC-Modules.ps1', parameters('_artifactsLocationSasToken')))]",
@@ -305,7 +310,8 @@
             "[variables('setPowerShellLogging')]",
             "[variables('saclModule')]",
             "[variables('setSACLScript')]",
-            "[variables('setWallPaperScript')]"
+            "[variables('setWallPaperScript')]",
+            "[variables('setBadBloood')]"
         ],
 
         // Virtual Machine Properties
@@ -646,6 +652,26 @@
                 "settings": {
                     "fileUris": "[variables('initialSetUpScripts')]",
                     "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ./Set-Initial-Settings.ps1',' ','-SetupType DC')]"
+                },
+                "protectedSettings": {}
+            }
+        },
+        {
+            "name": "[concat(variables('domainController')[0].vmName, '/', variables('domainController')[0].extensionName)]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2019-12-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines/', variables('domainController')[0].vmName)]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Compute",
+                "type": "CustomScriptExtension",
+                "typeHandlerVersion": "1.8",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "fileUris": "[variables('initialSetUpScripts')]",
+                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ./Install-BadBlood.ps1')]" 
                 },
                 "protectedSettings": {}
             }

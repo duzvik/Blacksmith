@@ -51,3 +51,14 @@ Invoke-Command -ScriptBlock $sb
 
 #Enable-PowerShell-Logging
 iwr("https://raw.githubusercontent.com/OTRF/Blacksmith/master/resources/scripts/powershell/auditing/Enable-PowerShell-Logging.ps1") -UseBasicParsing -Headers @{"Cache-Control"="no-cache"} | iex
+
+
+
+if 
+Install-BadBlood
+
+Remove-Item $Destination -Force 
+
+
+#clean-up
+Remove-Item $Destination -Force 
