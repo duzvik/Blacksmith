@@ -91,7 +91,7 @@
             "metadata": {
                 "description": "Prefix for the name of your virtual machine. Template will add a number starting from 5."
             },
-            "defaultValue": "WORKSTATION"
+            "defaultValue": "JUMP0"
         },
         "windowsDesktopSKU": {
             "type": "string",
@@ -193,27 +193,27 @@
             "type": "string",
             "defaultValue": "18.207.99.1"
         },
-        // "enableSysmon": {
-        //     "type": "bool",
-        //     "defaultValue": false,
-        //     "metadata": {
-        //         "description": "Do you want to install Sysmon on the endpoint?"
-        //     }
-        // },
-        // "enableMonitoringAgent": {
-        //     "type": "bool",
-        //     "defaultValue": false,
-        //     "metadata": {
-        //         "description": "Do you want to enable the Microsoft Log Analytics Monitoring agent? "
-        //     }
-        // },
-        // "enableAADConnect": {
-        //     "type": "bool",
-        //     "metadata": {
-        //         "description": "Do you want to want download the AADConnect installer and get it ready to set up after the deployment?"
-        //     },
-        //     "defaultValue": false
-        // },
+        "enableSysmon": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Do you want to install Sysmon on the endpoint?"
+            }
+        },
+        "enableMonitoringAgent": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Do you want to enable the Microsoft Log Analytics Monitoring agent? "
+            }
+        },
+        "enableAADConnect": {
+            "type": "bool",
+            "metadata": {
+                "description": "Do you want to want download the AADConnect installer and get it ready to set up after the deployment?"
+            },
+            "defaultValue": false
+        },
         "_artifactsLocation": {
             "type": "string",
             "defaultValue": "https://raw.githubusercontent.com/duzvik/Blacksmith/master/",
@@ -656,27 +656,7 @@
                 },
                 "protectedSettings": {}
             }
-        },
-        {
-            "name": "[concat(variables('domainController')[0].vmName, '/', variables('domainController')[0].extensionName, '/BadBlood')]",
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "apiVersion": "2019-12-01",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines/', variables('domainController')[0].vmName)]"
-            ],
-            "properties": {
-                "publisher": "Microsoft.Compute",
-                "type": "CustomScriptExtension",
-                "typeHandlerVersion": "1.8",
-                "autoUpgradeMinorVersion": true,
-                "settings": {
-                    "fileUris": "[variables('initialSetUpScripts')]",
-                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ./Install-BadBlood.ps1')]" 
-                },
-                "protectedSettings": {}
-            }
-        },
+        },        
         {
             "name": "CreateADForest",
             "type": "Microsoft.Resources/deployments",
