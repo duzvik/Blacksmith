@@ -285,6 +285,7 @@
         "joinDomainTemplateUri": "[uri(parameters('_artifactsLocation'), concat('templates/azure/Win10-AD/nestedtemplates/joinDomain.json', parameters('_artifactsLocationSasToken')))]",
         "installAADConnectTemplateUri": "[uri(parameters('_artifactsLocation'), concat('templates/azure/Win10-AD/nestedtemplates/installAADConnect.json', parameters('_artifactsLocationSasToken')))]",
         "installBadBloodTemplateUri": "[uri(parameters('_artifactsLocation'), concat('templates/azure/Win10-AD/nestedtemplates/duzvik/InstallBadBlood.json', parameters('_artifactsLocationSasToken')))]",
+        "cleanUpTemplateUri": "[uri(parameters('_artifactsLocation'), concat('templates/azure/Win10-AD/nestedtemplates/duzvik/Cleanup.json', parameters('_artifactsLocationSasToken')))]",
         
         // Custom Scripts
         "initialSettingsScript": "[uri(parameters('_artifactsLocation'), concat('templates/azure/Win10-AD/scripts/Set-Initial-Settings.ps1', parameters('_artifactsLocationSasToken')))]",
@@ -302,6 +303,7 @@
         "installSysmonScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/dsc/software/Install-Sysmon.zip', parameters('_artifactsLocationSasToken')))]",
         "installAADConnectScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/dsc/misc/Install-AADConnect.zip', parameters('_artifactsLocationSasToken')))]",
         "installBadBloood": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/dsc/duzvik/Install-BadBlood.zip', parameters('_artifactsLocationSasToken')))]",
+        "cleanupUrl": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/dsc/duzvik/Cleanup.zip', parameters('_artifactsLocationSasToken')))]",
 
         // Initial Setup Scripts
         "initialSetUpScripts": [
@@ -907,6 +909,33 @@
                     },
                     "installBadBloood": {
                         "value": "[variables('installBadBloood')]"
+                    },
+
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat(variables('domainController')[0].vmName, '-CleanUp')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "dependsOn": [
+                "[concat(variables('domainController')[0].vmName, '-InstallBadBlood')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('cleanUpTemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vmName":   {
+                        "value": "[variables('domainController')[0].vmName]"
+                    },
+                    "cleanupUrl": {
+                        "value": "[variables('cleanupUrl')]"
                     },
 
                     "location": {
