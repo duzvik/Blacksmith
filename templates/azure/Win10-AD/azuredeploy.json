@@ -294,7 +294,6 @@
         "saclModule": "https://raw.githubusercontent.com/OTRF/Set-AuditRule/master/Set-AuditRule.ps1",
         "setSACLScript": "[uri(parameters('_artifactsLocation'), 'resources/scripts/powershell/auditing/Set-SACLs.ps1')]",
         "setWallPaperScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/misc/Set-WallPaper.ps1', parameters('_artifactsLocationSasToken')))]",
-        "setBadBloood": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/duzvik/Install-BadBlood.ps1', parameters('_artifactsLocationSasToken')))]",
         
         // Powershell DSC Scripts
         "dscModules": "[uri(parameters('_artifactsLocation'), concat('templates/azure/Win10-AD/scripts/Install-DSC-Modules.ps1', parameters('_artifactsLocationSasToken')))]",
@@ -302,6 +301,7 @@
         "joinDomainScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/dsc/active-directory/Join-Domain.zip', parameters('_artifactsLocationSasToken')))]",
         "installSysmonScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/dsc/software/Install-Sysmon.zip', parameters('_artifactsLocationSasToken')))]",
         "installAADConnectScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/dsc/misc/Install-AADConnect.zip', parameters('_artifactsLocationSasToken')))]",
+        "installBadBloood": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/dsc/duzvik/Install-BadBlood.zip', parameters('_artifactsLocationSasToken')))]",
 
         // Initial Setup Scripts
         "initialSetUpScripts": [
@@ -312,8 +312,7 @@
             "[variables('setPowerShellLogging')]",
             "[variables('saclModule')]",
             "[variables('setSACLScript')]",
-            "[variables('setWallPaperScript')]",
-            "[variables('setBadBloood')]"
+            "[variables('setWallPaperScript')]"
         ],
 
         // Virtual Machine Properties
@@ -906,6 +905,10 @@
                     "vmName":   {
                         "value": "[variables('domainController')[0].vmName]"
                     },
+                    "installBadBloood": {
+                        "value": "[variables('installBadBloood')]"
+                    },
+
                     "location": {
                         "value": "[parameters('location')]"
                     }
