@@ -1,4 +1,4 @@
-configuration Install-BadBlood {
+configuration Cleanup {
     param 
     ( 
         
