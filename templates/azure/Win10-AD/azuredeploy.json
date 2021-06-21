@@ -635,6 +635,25 @@
                 "protectedSettings": {}
             }
         },
+         {
+            "name": "[concat(variables('allEndpoints')[copyIndex('vmNetworkWatcherExtSetUpCopy')].vmName, '/AzureNetworkWatcherExtension')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2019-12-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', variables('allEndpoints')[copyIndex('vmNetworkWatcherExtSetUpCopy')].vmName)]"            
+            ],
+            "copy": {
+                "name": "vmNetworkWatcherExtSetUpCopy",
+                "count": "[length(variables('allEndpoints'))]"
+            },
+            "properties": {
+                "autoUpgradeMinorVersion": true,
+                "publisher": "Microsoft.Azure.NetworkWatcher",
+                "type": "NetworkWatcherAgentWindows",
+                "typeHandlerVersion": "1.4"
+            }
+        },
         {
             "name": "[concat(variables('domainController')[0].vmName, '/', variables('domainController')[0].extensionName)]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
