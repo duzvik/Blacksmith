@@ -299,7 +299,7 @@
         "installSysmonScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/dsc/software/Install-Sysmon.zip', parameters('_artifactsLocationSasToken')))]",
         "installAADConnectScript": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/dsc/misc/Install-AADConnect.zip', parameters('_artifactsLocationSasToken')))]",
         "installBadBloood": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/dsc/duzvik/Install-BadBlood.zip', parameters('_artifactsLocationSasToken')))]",
-        "cleanupUrl": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/dsc/duzvik/Cleanup.zip', parameters('_artifactsLocationSasToken')))]",
+        "cleanupUrl": "[uri(parameters('_artifactsLocation'), concat('resources/scripts/powershell/dsc/duzvik/cleanup.zip', parameters('_artifactsLocationSasToken')))]",
 
         // Initial Setup Scripts
         "initialSetUpScripts": [
